@@ -60,4 +60,7 @@ jobs:
 
           Validation: clean dependency installation and static build completed before this proposal was opened. Review the site preview before merging visual or major updates.
           BODY
-          gh pr create --base main --head "$branch" --title "Update Folio to $FOLIO_VERSION" --body-file /tmp/folio-update-body.md
+          if ! gh pr create --base main --head "$branch" --title "Update Folio to $FOLIO_VERSION" --body-file /tmp/folio-update-body.md; then
+            printf '### Folio update ready\n\nThe updated site built successfully. This repository or organization may prevent Actions from creating pull requests.\n\n[Open the prepared update](https://github.com/%s/compare/main...%s?expand=1)\n' "$GITHUB_REPOSITORY" "$branch" >> "$GITHUB_STEP_SUMMARY"
+            echo '::notice::Update branch prepared. Open the compare link in the run summary to create its pull request.'
+          fi

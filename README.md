@@ -9,7 +9,7 @@ Folio runs locally. Published sites are static HTML and CSS, without the editor 
 Requires Node.js 22.12+.
 
 ```sh
-npx --package=https://github.com/shhhstudio/folio/releases/download/v0.1.0/shhh-studio-folio-0.1.0.tgz folio init my-site
+npx --package=https://github.com/shhhstudio/folio/releases/download/v0.1.1/shhh-studio-folio-0.1.1.tgz folio init my-site
 cd my-site
 npm install
 npm run dev
@@ -73,10 +73,10 @@ permissions:
   pull-requests: write
 jobs:
   update:
-    uses: shhhstudio/folio/.github/workflows/update-site.yml@v0.1.0
+    uses: shhhstudio/folio/.github/workflows/update-site.yml@v0.1.1
 ```
 
-Allow GitHub Actions to create pull requests in the consumer repository's Actions settings. Dependabot can propose updates to the reusable workflow reference itself. See [architecture and compatibility](docs/architecture.md).
+When the repository permits it, Actions opens a pull request. If an organization policy prevents that, the checked update branch is still pushed and the run summary provides a link to open its PR manually. No organization policy needs to be weakened. Dependabot can propose updates to the reusable workflow reference itself. See [architecture and compatibility](docs/architecture.md).
 
 ## Develop Folio
 

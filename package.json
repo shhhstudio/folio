@@ -1,6 +1,6 @@
 {
   "name": "@shhh-studio/folio",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A small local website builder. Inline Markdown, reusable sections, portable content and static output.",
   "type": "module",
   "license": "MIT",
