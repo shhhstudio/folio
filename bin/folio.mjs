@@ -14,12 +14,13 @@ try{
   pkg.dependencies['@shhh-studio/folio']=`https://github.com/shhhstudio/folio/releases/download/v${engine.version}/shhh-studio-folio-${engine.version}.tgz`;
   await writeFile(path.join(folder,'package.json'),JSON.stringify(pkg,null,2)+'\n');
   console.log(`Created ${folder}\nRun: cd ${folder} && npm install && npm run dev`);
- }else if(['build','dev','preview'].includes(command)){
+ }else if(['build','dev','preview','mcp'].includes(command)){
   const config=await loadConfig(path.resolve(flag('--root',process.cwd())));
   if(flag('--port'))config.port=Number(flag('--port'));
   if(command==='build')await buildSite(config);
   if(command==='dev'){const {serve}=await import('../lib/server.mjs');await serve(config)}
+  if(command==='mcp'){const {serveMcp}=await import('../lib/mcp.mjs');await serveMcp(config,{readOnly:args.includes('--read-only')})}
   if(command==='preview'){const {preview}=await import('vite');const server=await preview({configFile:false,root:config.root,build:{outDir:config.outDir},preview:{host:'127.0.0.1',port:config.port+1,strictPort:true}});server.printUrls()}
  }else if(command==='--version'||command==='version'){console.log(JSON.parse(await readFile(path.join(packageRoot,'package.json'),'utf8')).version)}
- else console.log('Folio — a website builder by Shhh Studio\n\nfolio init my-site\nfolio dev [--root path] [--port 4321]\nfolio build [--root path]\nfolio preview [--root path]\n\nThemes: neutral (default), paper90. Select in folio.config.json or the page inspector.');
+ else console.log('Folio — a website builder by Shhh Studio\n\nfolio init my-site\nfolio dev [--root path] [--port 4321]\nfolio build [--root path]\nfolio preview [--root path]\nfolio mcp --root /absolute/path/to/site [--read-only]\n\nThemes: neutral (default), paper90. Select in folio.config.json or the page inspector.');
 }catch(error){console.error('Folio: '+error.message);process.exitCode=1}

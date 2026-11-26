@@ -9,7 +9,7 @@ Folio runs locally. Published sites are static HTML and CSS, without the editor 
 Requires Node.js 22.12+.
 
 ```sh
-npx --package=https://github.com/shhhstudio/folio/releases/download/v0.1.1/shhh-studio-folio-0.1.1.tgz folio init my-site
+npx --package=https://github.com/shhhstudio/folio/releases/download/v0.2.0/shhh-studio-folio-0.2.0.tgz folio init my-site
 cd my-site
 npm install
 npm run dev
@@ -23,6 +23,10 @@ npm run preview   # serves the generated site
 ```
 
 The package is distributed through versioned, public GitHub release tarballs. It installs like an npm dependency, with a lockfile and integrity hash. No GitHub or npm account is required to install it. Registry publication can be added later without changing the content format.
+
+## MCP for agents
+
+Folio ships a local MCP server: `folio mcp --root /absolute/path/to/site`. Agents can read/edit pages, compose sections, select themes and build using the same content store as the editor. Add `--read-only` for inspection without write tools. See [connection examples and the tool list](docs/mcp.md). The server never commits, pushes or publishes.
 
 ## Two themes, one content format
 
@@ -73,7 +77,7 @@ permissions:
   pull-requests: write
 jobs:
   update:
-    uses: shhhstudio/folio/.github/workflows/update-site.yml@v0.1.1
+    uses: shhhstudio/folio/.github/workflows/update-site.yml@v0.2.0
 ```
 
 When the repository permits it, Actions opens a pull request. If an organization policy prevents that, the checked update branch is still pushed and the run summary provides a link to open its PR manually. No organization policy needs to be weakened. Dependabot can propose updates to the reusable workflow reference itself. See [architecture and compatibility](docs/architecture.md).
