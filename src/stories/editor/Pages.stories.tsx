@@ -1,0 +1,11 @@
+import {useState} from 'react';
+import type {Meta,StoryObj} from '@storybook/react-vite';
+import {PagesMenu} from '../../editor/pages-menu';
+import '../../editor/inline.css';
+import './editor-story.css';
+const sample=[{slug:'home',title:'Your site'},{slug:'a-propos',title:'À propos'},{slug:'un-projet',title:'Un titre volontairement long pour vérifier la troncature'}];
+const meta={title:'Editor/Pages',component:PagesMenu,tags:['autodocs'],args:{pages:sample,current:'home',creating:false,error:'',onCreate:()=>{},onNavigate:()=>{}},parameters:{docs:{description:{component:'Le même menu que dans l’éditeur. Le + ouvre la création ; la flèche revient à la liste. Les scénarios d’erreur et d’attente se testent via les contrôles.'}}}} satisfies Meta<typeof PagesMenu>;
+export default meta;type Story=StoryObj<typeof meta>;
+export const Gestion:Story={render:args=>{const [pages,setPages]=useState(args.pages),[current,setCurrent]=useState(args.current),[error,setError]=useState(args.error);return <div className="editor-specimen"><div className="story-card"><PagesMenu {...args} pages={pages} current={current} error={error||args.error} onNavigate={setCurrent} onDelete={slug=>{setPages(p=>p.filter(page=>page.slug!==slug));if(current===slug)setCurrent('home')}} onCreate={(title,slug)=>{if(pages.some(p=>p.slug===slug)){setError('Cette adresse est déjà utilisée.');return}setPages([...pages,{title,slug}]);setCurrent(slug);setError('')}}/></div></div>}};
+export const Erreur:Story={...Gestion,args:{error:'Cette adresse est déjà utilisée. Choisis une autre adresse.'}};
+export const CreationEnCours:Story={...Gestion,args:{creating:true}};

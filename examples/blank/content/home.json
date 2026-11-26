@@ -1,0 +1,82 @@
+{
+  "root": {
+    "props": {
+      "siteName": "Your site",
+      "title": "Your site",
+      "description": "A small independent website.",
+      "location": "Your corner of the internet",
+      "theme": "light",
+      "draft": true,
+      "navigation": [
+        {
+          "title": "About",
+          "href": "/#about"
+        },
+        {
+          "title": "Contact",
+          "href": "/#contact"
+        }
+      ]
+    }
+  },
+  "content": [
+    {
+      "type": "Hero",
+      "props": {
+        "tone": "paper",
+        "layout": "centered",
+        "space": "airy",
+        "width": "wide",
+        "media": "none",
+        "image": "",
+        "alt": "",
+        "actions": [],
+        "anchor": "",
+        "id": "intro",
+        "title": "A place for\nyour ideas.",
+        "subtitle": "Make yourself at home."
+      }
+    },
+    {
+      "type": "Section",
+      "props": {
+        "tone": "paper",
+        "layout": "centered",
+        "space": "airy",
+        "width": "wide",
+        "media": "none",
+        "image": "",
+        "alt": "",
+        "actions": [],
+        "anchor": "about",
+        "id": "about",
+        "label": "01 — Start here",
+        "title": "Your words.\nYour own space.",
+        "body": "Click a text to make it yours. Add a section, change its layout, or choose an illustration.\n\nYour content stays in simple files. You can take it with you."
+      }
+    },
+    {
+      "type": "Links",
+      "props": {
+        "tone": "paper",
+        "layout": "centered",
+        "space": "airy",
+        "width": "wide",
+        "media": "none",
+        "image": "",
+        "alt": "",
+        "actions": [],
+        "anchor": "contact",
+        "id": "contact",
+        "label": "02 — Keep in touch",
+        "title": "Say hello.",
+        "items": [
+          {
+            "title": "Email",
+            "href": "mailto:hello@example.com"
+          }
+        ]
+      }
+    }
+  ]
+}

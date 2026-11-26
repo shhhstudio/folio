@@ -1,0 +1,24 @@
+import {DeviceControl,type PreviewDevice} from '../../editor/device-control';
+import {InlineField} from '../../editor/inline-field';
+import {useState} from 'react';
+import {PropertySelect} from '../../editor/property-select';
+import {PropertyChoice} from '../../editor/property-choice';
+import {PropertyList} from '../../editor/property-list';
+import {ImageField} from '../../editor/image-field';
+import {InsertControl,SectionPicker} from '../../editor/insert-control';
+import '../../editor/inline.css';
+import './editor-story.css';
+export default {title:'Editor/Contrôles',tags:['autodocs']};
+export const Selects={render:()=>{const [tone,setTone]=useState('paper'),[space,setSpace]=useState('airy');return <div className="editor-specimen"><div className="story-card option-fields"><PropertySelect label="Couleur" value={tone} color values={['paper','blue','salmon','yellow','indigo','orange']} onChange={setTone}/><PropertySelect label="Espacement" value={space} values={['compact','normal','airy']} onChange={setSpace}/></div></div>}};
+export const Segments={render:()=>{const [layout,setLayout]=useState('centered'),[width,setWidth]=useState('wide');return <div className="editor-specimen"><div className="story-card option-fields"><PropertyChoice label="Disposition" value={layout} values={['centered','split','reverse']} onChange={setLayout}/><PropertyChoice label="Largeur" value={width} values={['wide','reading']} onChange={setWidth}/></div></div>}};
+export const ListeReordonnable={render:()=>{const [items,setItems]=useState([{title:'Work'},{title:'Elsewhere'},{title:'Un titre très long pour tester la troncature du libellé'}]),[selected,setSelected]=useState('');return <div className="editor-specimen"><div className="story-card specimen-list"><PropertyList label="Navigation" items={items} onChange={setItems} onSelect={i=>setSelected(items[i].title)} onAdd={()=>setItems([...items,{title:'Nouveau lien'}])}/></div><p role="status">{selected}</p></div>}};
+export const Sections={render:()=>{const [items,setItems]=useState([{title:'About'},{title:'Work'},{title:'Friends'}]);return <div className="editor-specimen"><div className="story-card specimen-list"><PropertyList label="Sections de la page" items={items} onChange={setItems} onSelect={()=>{}} onDuplicate={i=>setItems([...items.slice(0,i+1),{...items[i]},...items.slice(i+1)])}/></div></div>}};
+export const Photographies={render:()=>{const [value,setValue]=useState('/media/example.svg');return <div className="editor-specimen"><div className="story-card option-fields"><ImageField value={value} onChange={setValue} allowUpload={false} library={[{label:'Portrait',url:'/media/example.svg'},{label:'Plage',url:'/media/example.svg'},{label:'Route',url:'/media/example.svg'}]}/></div></div>}};
+export const Insertion={render:()=>{const [open,setOpen]=useState(false),[type,setType]=useState('');return <div className="editor-specimen"><p>Le + apparaît au survol ou au focus entre deux sections.</p><InsertControl index={0} open={open} onToggle={()=>setOpen(!open)} />{open&&<aside className="section-options"><header><strong>Ajouter une section</strong><button aria-label="Fermer" onClick={()=>setOpen(false)}>×</button></header><div className="option-fields"><SectionPicker onInsert={t=>{setType(t);setOpen(false)}}/></div></aside>}<p role="status">{type&&'Section choisie : '+type}</p></div>}};
+
+export const TexteInline={render:()=>{const [value,setValue]=useState('Cliquez ici pour modifier ce texte.');return <div className="editor-specimen"><div className="paper" style={{padding:32}}><h2><InlineField field="title" value={value} dirty={()=>{}} commit={(_field,text)=>setValue(text)}/></h2></div><p>La valeur est conservée au changement de focus. Aucun champ de texte en double dans le panneau.</p></div>}};
+
+export const TaillesApercu={render:()=>{const [device,setDevice]=useState<PreviewDevice>('desktop');return <div className="editor-specimen"><header className="edit-top"><DeviceControl value={device} onChange={setDevice}/></header><p>{device}</p></div>}};
+export const SourceMarkdown={render:()=>{const [text,setText]=useState('Du **gras**, de l’*italique*, du `code` et un [lien](https://example.com).');return <div className="editor-specimen"><div className="paper" style={{padding:32}}><InlineField field="body" value={text} multiline dirty={()=>{}} commit={(_field,value)=>setText(value)}/></div></div>}};
+
+export const ArticleLongAvecImages={render:()=>{const [text,setText]=useState('Un début.\n\n![Plage](/media/example.svg)\n\nUn paragraphe intermédiaire.\n\n![Route](/media/example.svg)\n\n## Après les images\n\nÉcrire à la fin de ce paragraphe doit conserver la position de défilement et la hauteur des photos.');return <div className="editor-specimen"><div className="paper" style={{padding:32,maxWidth:720,margin:'auto'}}><InlineField field="body" value={text} multiline images dirty={()=>{}} commit={(_field,value)=>setText(value)}/></div></div>}};

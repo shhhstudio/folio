@@ -1,0 +1,15 @@
+/* Public API: override these variables on .paper or a wrapper to inherit the system. */
+.paper {
+  --paper:#f6f1e7; --tile:#ece6d8; --ink:#1b1a17; --muted:#625c51;
+  --blue:#3d62a8; --salmon:#e1907d; --yellow:#e8bb4a;
+  /* Special-use inks: overlaps and exceptional accents, never default surfaces. */
+  --indigo:#363752; --orange:#cd6a24;
+  --sans:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --wrap:72rem; --reading:44rem; --gutter:clamp(20px,5cqw,64px);
+  --space-compact:clamp(36px,5cqw,64px); --space-normal:clamp(64px,8cqw,104px); --space-airy:clamp(88px,12cqw,164px);
+  --gap:clamp(24px,4cqw,64px); --grain:url('/folio-assets/grain.png');
+  color-scheme:light;
+}
+.paper[data-theme=dark] {--paper:#20201e;--tile:#2d2b27;--ink:#f6f1e7;--muted:#c8c0b3;color-scheme:dark;}
+@media(prefers-color-scheme:dark){.paper[data-theme=auto]{--paper:#20201e;--tile:#2d2b27;--ink:#f6f1e7;--muted:#c8c0b3;color-scheme:dark;}}

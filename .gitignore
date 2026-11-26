@@ -1,0 +1,10 @@
+node_modules/
+dist/
+storybook-static/
+*.tgz
+.netlify/
+.DS_Store
+*.log
+**/.history/
+**/.archive/
+examples/*/dist/

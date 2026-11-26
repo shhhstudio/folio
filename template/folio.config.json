@@ -1,0 +1,9 @@
+{
+  "name": "Your site",
+  "url": "https://example.com",
+  "theme": "neutral",
+  "contentDir": "content",
+  "publicDir": "public",
+  "outDir": "dist",
+  "port": 4321
+}

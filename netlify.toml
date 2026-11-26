@@ -1,0 +1,6 @@
+"$schema" = "https://open-api.netlify.com/netlify.schema.json"
+[build]
+  command = "npm run build && node bin/folio.mjs build --root examples/blank"
+  publish = "examples/blank/dist"
+[build.environment]
+  NODE_VERSION = "22"

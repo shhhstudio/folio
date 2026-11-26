@@ -1,0 +1,63 @@
+name: Update a Folio site
+on:
+  workflow_call:
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Find the latest stable release
+        id: release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api repos/shhhstudio/folio/releases/latest > /tmp/folio-release.json
+          node --input-type=module <<'JS'
+          import fs from 'node:fs';
+          const release=JSON.parse(fs.readFileSync('/tmp/folio-release.json'));
+          if(!/^v\d+\.\d+\.\d+$/.test(release.tag_name)||release.prerelease||release.draft)throw Error('Expected a stable release');
+          const version=release.tag_name.slice(1),name=`shhh-studio-folio-${version}.tgz`;
+          if(!release.assets.some(a=>a.name===name))throw Error('Release package missing');
+          const url=`https://github.com/shhhstudio/folio/releases/download/${release.tag_name}/${name}`;
+          const pkg=JSON.parse(fs.readFileSync('package.json'));
+          const current=pkg.dependencies['@shhh-studio/folio'];
+          if(current===url){fs.appendFileSync(process.env.GITHUB_OUTPUT,'changed=false\n');process.exit(0)}
+          const old=/\/v(\d+)\.(\d+)\.(\d+)\//.exec(current);
+          if(old){const next=version.split('.').map(Number),previous=old.slice(1).map(Number);let newer=false;for(let i=0;i<3;i++){if(next[i]!==previous[i]){newer=next[i]>previous[i];break}}if(!newer){fs.appendFileSync(process.env.GITHUB_OUTPUT,'changed=false\n');process.exit(0)}}
+          pkg.dependencies['@shhh-studio/folio']=url;fs.writeFileSync('package.json',JSON.stringify(pkg,null,2)+'\n');
+          fs.appendFileSync(process.env.GITHUB_OUTPUT,`changed=true\nversion=${version}\n`);
+          JS
+      - if: steps.release.outputs.changed == 'true'
+        run: |
+          npm install --package-lock-only --ignore-scripts
+          npm ci
+          npm run build
+      - name: Open a checked update proposal
+        if: steps.release.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          FOLIO_VERSION: ${{ steps.release.outputs.version }}
+        run: |
+          branch="folio/update-$FOLIO_VERSION"
+          if git ls-remote --exit-code --heads origin "$branch" >/dev/null 2>&1; then exit 0; fi
+          git switch -c "$branch"
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add package.json package-lock.json
+          git commit -m "Update Folio to $FOLIO_VERSION"
+          git push origin "$branch"
+          cat > /tmp/folio-update-body.md <<'BODY'
+          Updates the shared Folio engine and themes. The site's content and photographs are unchanged.
+
+          Validation: clean dependency installation and static build completed before this proposal was opened. Review the site preview before merging visual or major updates.
+          BODY
+          gh pr create --base main --head "$branch" --title "Update Folio to $FOLIO_VERSION" --body-file /tmp/folio-update-body.md

@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.netlify/
+content/.history/
+content/.archive/
+.DS_Store
+*.log
+.env*

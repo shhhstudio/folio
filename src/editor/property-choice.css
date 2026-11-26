@@ -1,0 +1,20 @@
+.option-fields .property-choice,.property-choice{border:0;padding:0;margin:0;min-width:0;font:12px/1.4 system-ui,sans-serif;color:#3f3f46}
+.property-choice legend{padding:0;margin:0 0 10px;font-weight:500;font-size:12px}
+.choice-options{display:flex;gap:3px;padding:3px;background:#f4f4f5;border:1px solid #ededf0;border-radius:7px}
+.property-choice .choice-option{flex:1;min-width:0;border:1px solid transparent;background:transparent;border-radius:5px;padding:8px 4px;font:500 11px/1.4 system-ui,sans-serif;color:#71717a;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap}
+.property-choice .choice-option:hover{color:#18181b;background:#eaeaec}
+.property-choice .choice-option.is-active{background:#fff;color:#18181b;border-color:#dedee3;box-shadow:0 1px 2px #00000008}
+.property-choice .choice-option:focus-visible{outline:2px solid #3d62a8;outline-offset:2px}
+.color-choice .choice-options{display:grid;grid-template-columns:repeat(3,1fr);gap:12px 8px;background:none;border:0;padding:0}
+.color-choice .choice-option{display:grid;justify-items:center;gap:7px;border:0;padding:4px;background:none!important;box-shadow:none!important}
+.choice-swatch{width:34px;height:34px;border-radius:50%;border:1px solid #00000012;display:grid;place-items:center}
+.color-choice .is-active .choice-swatch{outline:1.5px solid #52525b;outline-offset:3px}
+.color-choice .choice-caption{font-size:10px;font-weight:400}
+.photo-library{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.photo-library button.photo-option{padding:3px;border:1px solid #e4e4e7;border-radius:6px;background:#fff;cursor:pointer;min-width:0;overflow:hidden;color:#71717a;font:10px system-ui;display:grid;gap:4px;text-align:left}
+.photo-library .photo-option[aria-pressed=true]{border-color:#3d62a8;outline:1px solid #3d62a8}
+.photo-library .photo-option img{width:100%;height:48px;object-fit:cover;border-radius:3px}
+.photo-library .photo-option span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:0 2px 3px}
+.photo-library .photo-option.photo-empty{min-height:68px;align-content:center;text-align:center}
+.property-choice:not(.color-choice) .choice-option{flex-wrap:nowrap;white-space:nowrap;gap:4px;padding:8px 3px;font-size:10px}.property-choice:not(.color-choice) .choice-option svg{width:15px;flex-shrink:0}.property-choice:not(.color-choice) .choice-option>span{min-width:0;overflow:hidden;text-overflow:ellipsis}
+.property-choice:not(.color-choice) .choice-option{flex:1 1 auto}.property-choice:not(.color-choice) .choice-option svg{width:13px}.property-choice:not(.color-choice) .choice-option>span{flex-shrink:0}

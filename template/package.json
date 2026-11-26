@@ -1,0 +1,17 @@
+{
+  "name": "my-folio-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "folio dev",
+    "build": "folio build",
+    "preview": "folio preview"
+  },
+  "dependencies": {
+    "@shhh-studio/folio": "https://github.com/shhhstudio/folio/releases/download/v0.1.0/shhh-studio-folio-0.1.0.tgz"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}
